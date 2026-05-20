@@ -330,7 +330,7 @@ export const Main = () => {
 
                                             <img
                                                 className="img-fluid mx-auto mb-2"
-                                                src={`${a.Img}`}
+                                                src={`/uploads/${a.Img}`}
                                                 loading='lazy'
                                                 alt={a.Name}
                                                 style={{ maxWidth: "120px",maxHeight:"120px" }}
