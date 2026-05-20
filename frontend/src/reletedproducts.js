@@ -191,7 +191,7 @@ console.log(res.data)
               >
 
                 <img
-                  src={`/uploads/${a.Img}`}
+                  src={` /${a.Img}`}
                   className="object-fit-cover rounded mx-auto"
                   style={{ width: "100px", height: "100px" }}
                   alt=""
@@ -263,7 +263,7 @@ Filters
 
                                     <div className="d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                         <img
-                                            src={`/uploads/${b.Img}`}
+                                            src={` g}`}
                                             alt={b.ProductName}
                                             className="img-fluid"
                                             style={{ maxHeight: "120px" }}

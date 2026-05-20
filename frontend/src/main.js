@@ -330,7 +330,7 @@ export const Main = () => {
 
                                             <img
                                                 className="img-fluid mx-auto mb-2"
-                                                src={`/uploads/${a.Img}`}
+                                                src={` /${a.Img}`}
                                                 loading='lazy'
                                                 alt={a.Name}
                                                 style={{ maxWidth: "120px",maxHeight:"120px" }}
@@ -393,7 +393,7 @@ export const Main = () => {
                                     style={{ height: "150px" }}
                                 >
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={` /${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid rounded"
@@ -462,7 +462,7 @@ export const Main = () => {
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={` /${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid"
@@ -523,7 +523,7 @@ export const Main = () => {
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={` /${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid"
@@ -584,7 +584,7 @@ export const Main = () => {
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={` /${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid"
@@ -646,7 +646,7 @@ export const Main = () => {
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={` /${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid"
@@ -708,7 +708,7 @@ export const Main = () => {
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={` /${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid"
@@ -829,7 +829,7 @@ export const Main = () => {
                     <div className="marquee py-5">
                         <div className="marquee-content gap-5">
                             {br.concat(br).map((a, index) => (
-                                <img key={index} className='rounded-4 object-fit-cover' src={`/uploads/${a.Img}`} height="100px" alt="brand" />
+                                <img key={index} className='rounded-4 object-fit-cover' src={` /${a.Img}`} height="100px" alt="brand" />
                             ))}
                         </div>
                     </div>
