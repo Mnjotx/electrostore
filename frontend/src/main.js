@@ -1,6 +1,6 @@
 
 import { useContext, useEffect, useState, } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import banner1 from './images/banner1.png'
 import banner2 from './images/banner2.png'
 import banner3 from './images/banner3.png'
@@ -14,13 +14,11 @@ export const Main = () => {
     const [spro, setspro] = useState([])
     const [lpro, setlpro] = useState([])
     const [br, setbr] = useState([])
-    const [idd, setidd] = useState()
     const [laptop, setlaptop] = useState([])
     const [mobile, setmobile] = useState([])
     const [led, setled] = useState([])
     const [airpod, setairpod] = useState([])
     const { id } = useContext(Context)
-    const [discount, setdiscount] = useState("")
     const [showTop, setShowTop] = useState(false);
 
 
@@ -36,21 +34,6 @@ export const Main = () => {
         })
     }, [])
 
-    setTimeout(() => {
-        new window.Splide(".categorySlider", {
-            perPage: 6,
-            gap: 20,
-            autoplay: true,
-            arrows: false,
-            pagination: false,
-            breakpoints: {
-                992: { perPage: 4, arrows: true },
-                768: { perPage: 3, arrows: true },
-                576: { perPage: 2, arrows: true },
-            },
-        }).mount();
-    }, 300);
-
     useEffect(() => {
         show();
         show2();
@@ -61,6 +44,26 @@ export const Main = () => {
         show7()
         show8()
     }, [])
+
+    useEffect(() => {
+        if (!d.length || !window.Splide || !document.querySelector(".categorySlider")) return
+
+        const slider = new window.Splide(".categorySlider", {
+            perPage: 6,
+            gap: 20,
+            autoplay: true,
+            arrows: false,
+            pagination: false,
+            breakpoints: {
+                992: { perPage: 4, arrows: true },
+                768: { perPage: 3, arrows: true },
+                576: { perPage: 2, arrows: true },
+            },
+        })
+
+        slider.mount()
+        return () => slider.destroy()
+    }, [d.length])
 
     useEffect(() => {
 
@@ -87,7 +90,6 @@ export const Main = () => {
             const res = await result.json()
             if (res.statuscode === 1) {
                 setd(res.data)
-                setidd(res.data[0]?.Category)
             }
             else {
                 alert("sfs")
@@ -290,25 +292,25 @@ export const Main = () => {
 
     return (
         <>
-            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-aos="fade">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src={banner1} class="d-block w-100" alt="..." />
+            <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel" data-aos="fade">
+                <div className="carousel-inner">
+                    <div className="carousel-item active">
+                        <img src={banner1} className="d-block w-100" alt="Electronics sale banner" />
                     </div>
-                    <div class="carousel-item">
-                        <img src={banner2} class="d-block w-100" alt="..." />
+                    <div className="carousel-item">
+                        <img src={banner2} className="d-block w-100" alt="Featured electronics banner" />
                     </div>
-                    <div class="carousel-item">
-                        <img src={banner3} class="d-block w-100" alt="..." />
+                    <div className="carousel-item">
+                        <img src={banner3} className="d-block w-100" alt="Electronics deals banner" />
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
+                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
+                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
                 </button>
             </div>
             <div className="container mt-5" data-aos="zoom-in">
@@ -383,10 +385,10 @@ export const Main = () => {
                             <div className="card w-100 border-0 card-sm- shadow-sm text-center p-3" data-aos="fade-up">
                                 <div className='cardicons justify-self-end'>
 
-                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice,p.SalePrice, p.Img, p._id) }}><i class="bi bi-heart-fill"></i>
+                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice,p.SalePrice, p.Img, p._id) }}><i className="bi bi-heart-fill"></i>
                                     </p><br></br>
-                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id,p.VendorID) }}><i class="bi bi-cart"></i></p>
-                                    <p><i class="bi bi-eye"></i></p>
+                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id,p.VendorID) }}><i className="bi bi-cart"></i></p>
+                                    <p><i className="bi bi-eye"></i></p>
                                 </div>
                                 <div
                                     className=" rounded d-flex justify-content-center align-items-center mb-3"
@@ -394,7 +396,7 @@ export const Main = () => {
                                 >
                                     <img
                                         src={`${p.Img}`}
-                                        alt={p.name}
+                                        alt={p.ProductName}
                                         loading='lazy'
                                         className="img-fluid rounded"
                                         style={{ height: "150px" }}
@@ -424,7 +426,7 @@ export const Main = () => {
                                     </p>
 
                                     <div className='d-flex gap-3'>
-                                        <Link to={`/detail?id=${p._id}&cid=${p.Category} `} className="btn btn-primary btn-sm w-50 ">
+                                        <Link to={`/detail?id=${p._id}&cid=${p.Category}`} className="btn btn-primary btn-sm w-50 ">
                                             View Product
                                         </Link>
                                         <button className='btn btn-danger btn-sm w-50 ' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}>Add to Cart</button>
@@ -455,15 +457,15 @@ export const Main = () => {
                                 </div>
                                 <div className='cardicons justify-self-end'>
 
-                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice, p.Img, p.SalePrice) }}><i class="bi bi-heart-fill"></i>
+                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice, p.Img, p.SalePrice) }}><i className="bi bi-heart-fill"></i>
                                     </p><br></br>
-                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity) }}><i class="bi bi-cart"></i></p>
-                                    <p><i class="bi bi-eye"></i></p>
+                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity) }}><i className="bi bi-cart"></i></p>
+                                    <p><i className="bi bi-eye"></i></p>
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
                                         src={`${p.Img}`}
-                                        alt={p.name}
+                                        alt={p.ProductName}
                                         loading='lazy'
                                         className="img-fluid"
                                         style={{ maxHeight: "120px" }}
@@ -491,7 +493,7 @@ export const Main = () => {
                                         </span>
                                     </p>
                                     <div className='d-flex gap-3'>
-                                        <Link to={`/detail?id=${p._id}&cid=${p.Category} `} className="btn btn-primary btn-sm w-50">
+                                        <Link to={`/detail?id=${p._id}&cid=${p.Category}`} className="btn btn-primary btn-sm w-50">
                                             View Product
                                         </Link>
                                         <button className='btn btn-danger btn-sm w-50 ' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}>Add to Cart</button>
@@ -516,15 +518,15 @@ export const Main = () => {
                             <div className="card w-100 border-0 shadow-sm text-center p-3" data-aos="fade-up">
                                 <div className='cardicons justify-self-end'>
 
-                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice, p.Img, p._id) }}><i class="bi bi-heart-fill"></i>
+                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice, p.Img, p._id) }}><i className="bi bi-heart-fill"></i>
                                     </p><br></br>
-                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}><i class="bi bi-cart"></i></p>
-                                    <p><i class="bi bi-eye"></i></p>
+                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}><i className="bi bi-cart"></i></p>
+                                    <p><i className="bi bi-eye"></i></p>
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
                                         src={`${p.Img}`}
-                                        alt={p.name}
+                                        alt={p.ProductName}
                                         loading='lazy'
                                         className="img-fluid"
                                         style={{ maxHeight: "120px" }}
@@ -552,7 +554,7 @@ export const Main = () => {
                                         </span>
                                     </p>
                                     <div className='d-flex gap-3'>
-                                        <Link to={`/detail?id=${p._id}&cid=${p.Category} `} className="btn btn-primary btn-sm w-50">
+                                        <Link to={`/detail?id=${p._id}&cid=${p.Category}`} className="btn btn-primary btn-sm w-50">
                                             View Product
                                         </Link>
                                         <button className='btn btn-danger btn-sm w-50 ' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}>Add to Cart</button>
@@ -577,15 +579,15 @@ export const Main = () => {
                             <div className="card w-100 border-0 shadow-sm text-center p-3" data-aos="fade-up">
                                 <div className='cardicons justify-self-end'>
 
-                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice, p.Img, p._id) }}><i class="bi bi-heart-fill"></i>
+                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice, p.Img, p._id) }}><i className="bi bi-heart-fill"></i>
                                     </p><br></br>
-                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}><i class="bi bi-cart"></i></p>
-                                    <p><i class="bi bi-eye"></i></p>
+                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}><i className="bi bi-cart"></i></p>
+                                    <p><i className="bi bi-eye"></i></p>
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
                                         src={`${p.Img}`}
-                                        alt={p.name}
+                                        alt={p.ProductName}
                                         loading='lazy'
                                         className="img-fluid"
                                         style={{ maxHeight: "120px" }}
@@ -614,7 +616,7 @@ export const Main = () => {
                                     </p>
 
                                     <div className='d-flex gap-3'>
-                                        <Link to={`/detail?id=${p._id}&cid=${p.Category} `} className="btn btn-primary btn-sm w-50">
+                                        <Link to={`/detail?id=${p._id}&cid=${p.Category}`} className="btn btn-primary btn-sm w-50">
                                             View Product
                                         </Link>
                                         <button className='btn btn-danger btn-sm w-50 ' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}>Add to Cart</button>
@@ -639,15 +641,15 @@ export const Main = () => {
                             <div className="card w-100 border-0 shadow-sm text-center p-3" data-aos="fade-up">
                                 <div className='cardicons justify-self-end'>
 
-                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice, p.Img, p._id) }}><i class="bi bi-heart-fill"></i>
+                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice, p.Img, p._id) }}><i className="bi bi-heart-fill"></i>
                                     </p><br></br>
-                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}><i class="bi bi-cart"></i></p>
-                                    <p><i class="bi bi-eye"></i></p>
+                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}><i className="bi bi-cart"></i></p>
+                                    <p><i className="bi bi-eye"></i></p>
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
                                         src={`${p.Img}`}
-                                        alt={p.name}
+                                        alt={p.ProductName}
                                         loading='lazy'
                                         className="img-fluid"
                                         style={{ maxHeight: "120px" }}
@@ -676,7 +678,7 @@ export const Main = () => {
                                     </p>
 
                                     <div className='d-flex gap-3'>
-                                        <Link to={`/detail?id=${p._id}&cid=${p.Category} `} className="btn btn-primary btn-sm w-50">
+                                        <Link to={`/detail?id=${p._id}&cid=${p.Category}`} className="btn btn-primary btn-sm w-50">
                                             View Product
                                         </Link>
                                         <button className='btn btn-danger btn-sm w-50 ' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}>Add to Cart</button>
@@ -701,15 +703,15 @@ export const Main = () => {
                             <div className="card w-100 border-0 shadow-sm text-center p-3" data-aos="fade-up">
                                 <div className='cardicons justify-self-end'>
 
-                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice, p.Img, p._id) }}><i class="bi bi-heart-fill"></i>
+                                    <p className='text-danger btn' onClick={() => { wish(id, p.ProductName, p.ProductPrice, p.Img, p._id) }}><i className="bi bi-heart-fill"></i>
                                     </p><br></br>
-                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}><i class="bi bi-cart"></i></p>
-                                    <p><i class="bi bi-eye"></i></p>
+                                    <p className='btn' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}><i className="bi bi-cart"></i></p>
+                                    <p><i className="bi bi-eye"></i></p>
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
                                         src={`${p.Img}`}
-                                        alt={p.name}
+                                        alt={p.ProductName}
                                         loading='lazy'
                                         className="img-fluid"
                                         style={{ maxHeight: "120px" }}
@@ -738,7 +740,7 @@ export const Main = () => {
                                     </p>
 
                                     <div className='d-flex flex-column flex-md-row gap-1 '>
-                                        <Link to={`/detail?id=${p._id}&cid=${p.Category} `} className="btn btn-primary btn-sm w-50 ">
+                                        <Link to={`/detail?id=${p._id}&cid=${p.Category}`} className="btn btn-primary btn-sm w-50 ">
                                             View Product
                                         </Link>
                                         <button className='btn btn-danger btn-sm w-50   ' onClick={() => { cart(id, p.ProductName, p.ProductPrice, p.Img, p.Quantity, p._id) }}>Add to Cart</button>

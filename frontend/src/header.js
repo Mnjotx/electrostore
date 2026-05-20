@@ -131,17 +131,17 @@ export const Header = () => {
                         {/* Nav Links */}
                         <ul className="navbar-nav flex-row gap-2 flex-shrink-0 mb-0">
 
-                            <Link to="/" className="text-decoration-none">
-                                <li className="nav-item">
-                                    <span className="nav-link fw-semibold px-3 py-2 rounded-2 header-nav-link">Home</span>
-                                </li>
-                            </Link>
+                            <li className="nav-item">
+                                <Link to="/" className="nav-link fw-semibold px-3 py-2 rounded-2 header-nav-link text-decoration-none">
+                                    Home
+                                </Link>
+                            </li>
 
-                            <Link to="/about" className="text-decoration-none">
-                                <li className="nav-item">
-                                    <span className="nav-link px-3 py-2 rounded-2 header-nav-link">About</span>
-                                </li>
-                            </Link>
+                            <li className="nav-item">
+                                <Link to="/about" className="nav-link px-3 py-2 rounded-2 header-nav-link text-decoration-none">
+                                    About
+                                </Link>
+                            </li>
 
                             <li className="nav-item dropdown">
                                 <span

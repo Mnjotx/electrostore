@@ -5,7 +5,6 @@ import Swal from "sweetalert2"
 import { Context } from "./usecontext"
 
 export const Detail = () => {
-    const [pro, setpro] = useState("")
     const [value, setvalue] = useState(1)
     const [img, setimg] = useState()
     const [name, setname] = useState("")
@@ -14,7 +13,6 @@ export const Detail = () => {
     const [detail, setdetail] = useState("")
     const [specs, setSpecs] = useState("")
     const { id } = useContext(Context)
-    const [idd, setidd] = useState("")
     const [rela, setrela] = useState([])
     const [pr] = useSearchParams()
     const prr = pr.get("id")
@@ -27,11 +25,21 @@ export const Detail = () => {
     const [review, setreview] = useState([])
     const navigate = useNavigate()
 const [activeTab, setActiveTab] = useState("specifications");
+    const getImageSrc = (image) => {
+        if (!image) return ""
+        return image.startsWith("http") || image.startsWith("/") ? image : `/uploads/${image}`
+    }
+
     useEffect(() => {
         show();
-        show2()
         showreview()
     }, [prr])
+
+    useEffect(() => {
+        if (catidd) {
+            show2()
+        }
+    }, [catidd])
 
     const show = async () => {
         const result = await fetch(`https://elcto-1.onrender.com/api/detail/${prr}`, {
@@ -43,11 +51,9 @@ const [activeTab, setActiveTab] = useState("specifications");
                 setname(res.data.ProductName)
                 setprice(res.data.ProductPrice)
                 setsaleprice(res.data.SalePrice)
-                setpro(res.data.Category)
                 setdetail(res.data.ProductDetail)
                 setimg(res.data.Img)
                 setSpecs(res.data.Specifications)
-                setidd(id)
             }
             else {
                 alert("not")
@@ -246,7 +252,7 @@ const [activeTab, setActiveTab] = useState("specifications");
                         {/* Product Image */}
                         <div className="col-lg-6 text-center col-12">
                             <img
-                                src={`${img}`}
+                                src={getImageSrc(img)}
                                 className="img-fluid rounded"
                                 style={{ maxHeight: "420px", objectFit: "contain" }}
                                 alt={name}
@@ -475,14 +481,14 @@ const [activeTab, setActiveTab] = useState("specifications");
                         <div className="col-lg-3 col-md-4 col-sm-6 col-6" key={a._id}>
                             <div className="card w-100 border-0 shadow-sm wishlist-card">
                                 <div className='cardicons justify-self-end'>
-                                    <p className='text-danger btn' onClick={() => { wish2(id, a.ProductName, a.ProductPrice, a.Img, a._id) }}><i class="bi bi-heart-fill"></i>
+                                    <p className='text-danger btn' onClick={() => { wish2(id, a.ProductName, a.ProductPrice, a.Img, a._id) }}><i className="bi bi-heart-fill"></i>
                                     </p><br></br>
-                                    <p className="btn" onClick={() => { cart(id, a.ProductName, a.ProductPrice, a.Img, a.Quantity, a._id ,a.VendorID) }}><i class="bi bi-cart"></i></p>
-                                    <p><i class="bi bi-eye"></i></p>
+                                    <p className="btn" onClick={() => { cart(id, a.ProductName, a.ProductPrice, a.Img, a.Quantity, a._id ,a.VendorID) }}><i className="bi bi-cart"></i></p>
+                                    <p><i className="bi bi-eye"></i></p>
                                 </div>
                                 <div className="">
                                     <img
-                                        src={`${a.Img}`}
+                                        src={getImageSrc(a.Img)}
                                         className="card-img-top p-3"
                                         alt={a.ProductName}
                                         style={{ height: "140px", objectFit: "contain" }}
@@ -504,7 +510,7 @@ const [activeTab, setActiveTab] = useState("specifications");
     <span className="text-muted small ms-1">(4.3)</span>
 </div>
                                     <div className="d-flex gap-2 py-2">
-                                        <Link to={`/detail?id=${a._id}&cid=${catidd} `}>
+                                        <Link to={`/detail?id=${a._id}&cid=${catidd}`}>
                                             <button className="btn btn-primary mt-auto w-100">
                                                 View Product
                                             </button></Link>
@@ -520,7 +526,7 @@ const [activeTab, setActiveTab] = useState("specifications");
             </div>
 
              <section className="container mt-2 py-4">
-                <h2 className="fw-bold text-center mb-4"></h2>
+                <h2 className="fw-bold text-center mb-4">Why Choose Us</h2>
                 <div className="row g-4 py-5">
                     <div className="col-md-3 col-6 text-center">
                         <i className="bi bi-truck fs-1 text-primary"></i>

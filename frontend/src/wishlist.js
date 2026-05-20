@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { Link, useNavigate, useSearchParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 import { Context } from "./usecontext"
 
@@ -9,9 +9,15 @@ export const Wish = () => {
     const [d, setd] = useState([])
     const { id } = useContext(Context)
     const navigate = useNavigate()
+    const getImageSrc = (img) => {
+        if (!img) return ""
+        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${img}`
+    }
 
     useEffect(() => {
-        show()
+        if (id) {
+            show()
+        }
     }, [id])
 
     const show = async (e) => {
@@ -124,9 +130,9 @@ export const Wish = () => {
 
                                 <div className="position-relative">
                                     <img
-                                        src={`${a.Img}`}
+                                        src={getImageSrc(a.Img)}
                                         className="card-img-top p-3"
-                                        alt="product"
+                                        alt={a.Name}
                                         style={{ height: "200px", objectFit: "contain" }}
                                     />
                                 </div>

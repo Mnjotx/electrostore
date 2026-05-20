@@ -1,15 +1,22 @@
 import { useContext, useEffect, useState } from "react"
 import { Context } from "./usecontext"
 import Swal from "sweetalert2"
-import { useNavigate, useSearchParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export const Cart = () => {
     const [d, setd] = useState([])
     const [price, setprice] = useState(0)
     const { id } = useContext(Context)
     const navigate = useNavigate()
+    const getImageSrc = (img) => {
+        if (!img) return ""
+        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${img}`
+    }
+
     useEffect(() => {
-        show()
+        if (id) {
+            show()
+        }
     }, [id])
 
     useEffect(() => {
@@ -17,14 +24,13 @@ export const Cart = () => {
             (acc, item) => acc + (item.Quantity) * (item.Price), 0
         )
         setprice(total)
-    })
+    }, [d])
 
     const show = async () => {
         const result = await fetch(`https://elcto-1.onrender.com/api/getcartdata/${id}`, {
             method: "get"
         })
         if (result.ok) {
-            console.log(result)
             const res = await result.json()
             if (res.statuscode === 1) {
                 setd(res.data)
@@ -133,8 +139,8 @@ export const Cart = () => {
                                     {
                                         d.map((a, index) =>
                                             <tr key={index}>
-                                                <td><button className="btn" onClick={() => remove(a._id)}><i class="bi bi-trash3-fill"></i></button></td>
-                                                <td><img style={{ height: "60px" }} src={`${a.Img}`}></img></td>
+                                                <td><button className="btn" onClick={() => remove(a._id)}><i className="bi bi-trash3-fill"></i></button></td>
+                                                <td><img style={{ height: "60px" }} src={getImageSrc(a.Img)} alt={a.Name}></img></td>
                                                 <td>{a.Name}</td>
                                                 <td>{a.Price}</td>
                                                 <td><div className="d-flex justify-content-center align-items-center gap-2">

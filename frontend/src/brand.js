@@ -5,13 +5,18 @@ import { useSearchParams } from "react-router-dom"
 export const Brand = () => {
 
   const [d, setd] = useState([])
-  const [idd, setidd] = useState("")
   const [pr] = useSearchParams()
   const prr = pr.get("id")
+  const getImageSrc = (img) => {
+    if (!img) return ""
+    return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${img}`
+  }
 
   useEffect(() => {
-    show()
-  }, [])
+    if (prr) {
+      show()
+    }
+  }, [prr])
 
   const show = async () => {
     const result = await fetch(`https://elcto-1.onrender.com/api/brand/${prr}`, {
@@ -21,7 +26,6 @@ export const Brand = () => {
       const res = await result.json()
       if (res.statuscode === 1) {
         setd(res.data)
-        setidd(res.data[0]?.Category)
       }
       else {
         alert("no")
@@ -41,8 +45,9 @@ export const Brand = () => {
                 <div className="card w-100 border-0 shadow-sm text-center p-3">
                   <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                     <img
-                      src={`${a.Img}`}
-                      alt={a.name}
+                      src={getImageSrc(a.Img)}
+                      alt={a.ProductName}
+                      loading="lazy"
                       className="img-fluid"
                       style={{ maxHeight: "120px" }}
                     />
@@ -67,7 +72,7 @@ export const Brand = () => {
                       </p>
                     </div>
 
-                    <Link to={`/detail?id=${a._id}&cid=${idd} `} className="btn btn-primary btn-sm w-50">
+                    <Link to={`/detail?id=${a._id}&cid=${a.Category}`} className="btn btn-primary btn-sm w-50">
                       View Product
                     </Link>
                   </div>

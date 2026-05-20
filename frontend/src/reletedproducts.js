@@ -13,6 +13,10 @@ export const Related = () => {
     const [pr] = useSearchParams()
     const navigate = useNavigate()
     const prr = pr.get("id")
+    const getImageSrc = (img) => {
+        if (!img) return ""
+        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${img}`
+    }
 
     useEffect(() => {
     if (prr) {
@@ -28,7 +32,6 @@ export const Related = () => {
             const res = await result.json()
             if (res.statuscode === 1) {
                 setd(res.data)
-console.log(res.data)
             }
             else {
                 alert("error")
@@ -97,8 +100,10 @@ console.log(res.data)
     }
     return 0
 })
- setTimeout(() => {
-        new window.Splide(".brandSlider", {
+    useEffect(() => {
+        if (!datta.length || !window.Splide || !document.querySelector(".brandSlider")) return
+
+        const slider = new window.Splide(".brandSlider", {
             perPage: 6,
             gap: 20,
             autoplay: true,
@@ -109,8 +114,11 @@ console.log(res.data)
                 768: { perPage: 3, arrows: true },
                 576: { perPage: 2, arrows: true },
             },
-        }).mount();
-    }, 300);
+        })
+
+        slider.mount()
+        return () => slider.destroy()
+    }, [datta.length]);
 
 
     const cart = async (id, name, price, img, value = 1, prr) => {
@@ -191,10 +199,10 @@ console.log(res.data)
               >
 
                 <img
-                  src={`${a.Img}`}
+                  src={getImageSrc(a.Img)}
                   className="object-fit-cover rounded mx-auto"
                   style={{ width: "100px", height: "100px" }}
-                  alt=""
+                  alt={a.BrandName}
                 />
 
                 <h6 className="mt-2">{a.BrandName}</h6>
@@ -222,7 +230,7 @@ console.log(res.data)
 className="btn  d-lg-none"
 data-bs-toggle="offcanvas"
 data-bs-target="#offcanvasRight"
-><i class="fa-duotone fa-solid fa-sliders"></i>
+><i className="bi bi-sliders"></i>
 Filters
 </button>
 </div>
@@ -255,16 +263,17 @@ Filters
                                 <div className="card border-0 shadow-sm text-center p-3 w-100">
                                     <div className='cardicons justify-self-end'>
 
-                                        <p className='text-danger btn' onClick={() => { wish(id, b.ProductName, b.ProductPrice, b.Img, b._id) }}><i class="bi bi-heart-fill"></i>
+                                        <p className='text-danger btn' onClick={() => { wish(id, b.ProductName, b.ProductPrice, b.Img, b._id) }}><i className="bi bi-heart-fill"></i>
                                         </p><br></br>
-                                        <p className="btn" onClick={() => { cart(id, b.ProductName, b.ProductPrice, b.Img, b.Quantity, b._id) }}><i class="bi bi-cart"></i></p>
-                                        <p><i class="bi bi-eye"></i></p>
+                                        <p className="btn" onClick={() => { cart(id, b.ProductName, b.ProductPrice, b.Img, b.Quantity, b._id) }}><i className="bi bi-cart"></i></p>
+                                        <p><i className="bi bi-eye"></i></p>
                                     </div>
 
                                     <div className="d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                         <img
-                                            src={` g}`}
+                                            src={getImageSrc(b.Img)}
                                             alt={b.ProductName}
+                                            loading="lazy"
                                             className="img-fluid"
                                             style={{ maxHeight: "120px" }}
                                         />
