@@ -27,7 +27,12 @@ export const Detail = () => {
 const [activeTab, setActiveTab] = useState("specifications");
     const getImageSrc = (image) => {
         if (!image) return ""
-        return image.startsWith("http") || image.startsWith("/") ? image : `/uploads/${image}`
+        return image.startsWith("http") || image.startsWith("/") ? image : `/uploads/${encodeURIComponent(image)}`
+    }
+    const handleImageError = (e, image) => {
+        if (!image || image.startsWith("http") || e.currentTarget.dataset.fallbackTried) return
+        e.currentTarget.dataset.fallbackTried = "true"
+        e.currentTarget.src = `https://elcto-1.onrender.com/uploads/${encodeURIComponent(image)}`
     }
 
     useEffect(() => {
@@ -253,6 +258,7 @@ const [activeTab, setActiveTab] = useState("specifications");
                         <div className="col-lg-6 text-center col-12">
                             <img
                                 src={getImageSrc(img)}
+                                onError={(e) => handleImageError(e, img)}
                                 className="img-fluid rounded"
                                 style={{ maxHeight: "420px", objectFit: "contain" }}
                                 alt={name}
@@ -489,6 +495,7 @@ const [activeTab, setActiveTab] = useState("specifications");
                                 <div className="">
                                     <img
                                         src={getImageSrc(a.Img)}
+                                        onError={(e) => handleImageError(e, a.Img)}
                                         className="card-img-top p-3"
                                         alt={a.ProductName}
                                         style={{ height: "140px", objectFit: "contain" }}

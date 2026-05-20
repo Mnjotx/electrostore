@@ -15,7 +15,12 @@ export const Related = () => {
     const prr = pr.get("id")
     const getImageSrc = (img) => {
         if (!img) return ""
-        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${img}`
+        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${encodeURIComponent(img)}`
+    }
+    const handleImageError = (e, img) => {
+        if (!img || img.startsWith("http") || e.currentTarget.dataset.fallbackTried) return
+        e.currentTarget.dataset.fallbackTried = "true"
+        e.currentTarget.src = `https://elcto-1.onrender.com/uploads/${encodeURIComponent(img)}`
     }
 
     useEffect(() => {
@@ -200,6 +205,7 @@ export const Related = () => {
 
                 <img
                   src={getImageSrc(a.Img)}
+                  onError={(e) => handleImageError(e, a.Img)}
                   className="object-fit-cover rounded mx-auto"
                   style={{ width: "100px", height: "100px" }}
                   alt={a.BrandName}
@@ -272,6 +278,7 @@ Filters
                                     <div className="d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                         <img
                                             src={getImageSrc(b.Img)}
+                                            onError={(e) => handleImageError(e, b.Img)}
                                             alt={b.ProductName}
                                             loading="lazy"
                                             className="img-fluid"

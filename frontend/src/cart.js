@@ -10,7 +10,12 @@ export const Cart = () => {
     const navigate = useNavigate()
     const getImageSrc = (img) => {
         if (!img) return ""
-        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${img}`
+        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${encodeURIComponent(img)}`
+    }
+    const handleImageError = (e, img) => {
+        if (!img || img.startsWith("http") || e.currentTarget.dataset.fallbackTried) return
+        e.currentTarget.dataset.fallbackTried = "true"
+        e.currentTarget.src = `https://elcto-1.onrender.com/uploads/${encodeURIComponent(img)}`
     }
 
     useEffect(() => {
@@ -140,7 +145,7 @@ export const Cart = () => {
                                         d.map((a, index) =>
                                             <tr key={index}>
                                                 <td><button className="btn" onClick={() => remove(a._id)}><i className="bi bi-trash3-fill"></i></button></td>
-                                                <td><img style={{ height: "60px" }} src={getImageSrc(a.Img)} alt={a.Name}></img></td>
+                                                <td><img style={{ height: "60px" }} src={getImageSrc(a.Img)} onError={(e) => handleImageError(e, a.Img)} alt={a.Name}></img></td>
                                                 <td>{a.Name}</td>
                                                 <td>{a.Price}</td>
                                                 <td><div className="d-flex justify-content-center align-items-center gap-2">

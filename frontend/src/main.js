@@ -20,6 +20,15 @@ export const Main = () => {
     const [airpod, setairpod] = useState([])
     const { id } = useContext(Context)
     const [showTop, setShowTop] = useState(false);
+    const getImageSrc = (img) => {
+        if (!img) return ""
+        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${encodeURIComponent(img)}`
+    }
+    const handleImageError = (e, img) => {
+        if (!img || img.startsWith("http") || e.currentTarget.dataset.fallbackTried) return
+        e.currentTarget.dataset.fallbackTried = "true"
+        e.currentTarget.src = `https://elcto-1.onrender.com/uploads/${encodeURIComponent(img)}`
+    }
 
 
 
@@ -332,7 +341,8 @@ export const Main = () => {
 
                                             <img
                                                 className="img-fluid mx-auto mb-2"
-                                                src={`/uploads/${a.Img}`}
+                                                src={getImageSrc(a.Img)}
+                                                onError={(e) => handleImageError(e, a.Img)}
                                                 loading='lazy'
                                                 alt={a.Name}
                                                 style={{ maxWidth: "120px",maxHeight:"120px" }}
@@ -831,7 +841,7 @@ export const Main = () => {
                     <div className="marquee py-5">
                         <div className="marquee-content gap-5">
                             {br.concat(br).map((a, index) => (
-                                <img key={index} className='rounded-4 object-fit-cover' src={`/uploads/${a.Img}`} height="100px" alt="brand" />
+                                <img key={index} className='rounded-4 object-fit-cover' src={getImageSrc(a.Img)} onError={(e) => handleImageError(e, a.Img)} height="100px" alt="brand" />
                             ))}
                         </div>
                     </div>

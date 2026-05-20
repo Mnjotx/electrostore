@@ -11,7 +11,12 @@ export const Wish = () => {
     const navigate = useNavigate()
     const getImageSrc = (img) => {
         if (!img) return ""
-        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${img}`
+        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${encodeURIComponent(img)}`
+    }
+    const handleImageError = (e, img) => {
+        if (!img || img.startsWith("http") || e.currentTarget.dataset.fallbackTried) return
+        e.currentTarget.dataset.fallbackTried = "true"
+        e.currentTarget.src = `https://elcto-1.onrender.com/uploads/${encodeURIComponent(img)}`
     }
 
     useEffect(() => {
@@ -131,6 +136,7 @@ export const Wish = () => {
                                 <div className="position-relative">
                                     <img
                                         src={getImageSrc(a.Img)}
+                                        onError={(e) => handleImageError(e, a.Img)}
                                         className="card-img-top p-3"
                                         alt={a.Name}
                                         style={{ height: "200px", objectFit: "contain" }}
