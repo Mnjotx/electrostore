@@ -11,12 +11,12 @@ export const Wish = () => {
     const navigate = useNavigate()
     const getImageSrc = (img) => {
         if (!img) return ""
-        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${encodeURIComponent(img)}`
+        return img.startsWith("http") || img.startsWith("/") ? img : `/uploads/${a.Img}/${encodeURIComponent(img)}`
     }
     const handleImageError = (e, img) => {
         if (!img || img.startsWith("http") || e.currentTarget.dataset.fallbackTried) return
         e.currentTarget.dataset.fallbackTried = "true"
-        e.currentTarget.src = `https://elcto-1.onrender.com/uploads/${encodeURIComponent(img)}`
+        e.currentTarget.src = `https://elcto-1.onrender.com/uploads/${a.Img}/${encodeURIComponent(img)}`
     }
 
     useEffect(() => {

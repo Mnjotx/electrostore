@@ -279,7 +279,7 @@ export const About = () => {
                     <div className="marquee py-5">
                         <div className="marquee-content gap-5">
                             {d.concat(d).map((a, index) => (
-                                <img key={index} className='rounded-4 object-fit-cover' src={`/uploads/${a.Img}`} height="100px" alt="brand" />
+                                <img key={index} className='rounded-4 object-fit-cover' src={`/uploads/${a.Img}/${a.Img}`} height="100px" alt="brand" />
                             ))}
                         </div>
                     </div>

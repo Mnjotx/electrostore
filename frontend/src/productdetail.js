@@ -27,12 +27,12 @@ export const Detail = () => {
 const [activeTab, setActiveTab] = useState("specifications");
     const getImageSrc = (image) => {
         if (!image) return ""
-        return image.startsWith("http") || image.startsWith("/") ? image : `/uploads/${encodeURIComponent(image)}`
+        return image.startsWith("http") || image.startsWith("/") ? image : `/uploads/${a.Img}/${encodeURIComponent(image)}`
     }
     const handleImageError = (e, image) => {
         if (!image || image.startsWith("http") || e.currentTarget.dataset.fallbackTried) return
         e.currentTarget.dataset.fallbackTried = "true"
-        e.currentTarget.src = `https://elcto-1.onrender.com/uploads/${encodeURIComponent(image)}`
+        e.currentTarget.src = `https://elcto-1.onrender.com/uploads/${a.Img}/${encodeURIComponent(image)}`
     }
 
     useEffect(() => {
