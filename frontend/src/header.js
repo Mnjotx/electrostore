@@ -8,7 +8,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 export const Header = () => {
     const [flag, setflag] = useState(false);
-    const { id, setid } = useContext(Context)
+    const { id, setid, theme, setTheme } = useContext(Context)
     const { setutype } = useContext(Context)
      const[d,setd]=useState([])
      const[cat,setcat]=useState([])
@@ -96,141 +96,167 @@ export const Header = () => {
         <>
 
 
-            <nav className="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
-                <div className="container">
-                    <div className="d-flex gap-4">
-                        <button
-                            className="navbar-toggler  d-lg-none"
-                            type="button"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#mobileOffcanvas"
-                            aria-controls="mobileOffcanvas"
-                            aria-label="Toggle navigation"
-                        >
-                            <span className="navbar-toggler-icon "></span>
+            <nav className="navbar navbar-expand-lg shadow-sm sticky-top" style={{ backgroundColor: theme === 'dark' ? '#1f1f1f' : '#ffffff' }}>
+                <div className="container-fluid px-4">
+
+                    {/* === MOBILE: Toggler + Logo + Theme icon === */}
+                    <div className="d-flex align-items-center gap-3 d-lg-none w-100 justify-content-between">
+                        <div className="d-flex align-items-center gap-2">
+                            <button
+                                className="navbar-toggler border-0 p-1"
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#mobileOffcanvas"
+                                aria-controls="mobileOffcanvas"
+                                aria-label="Toggle navigation"
+                            >
+                                <span className="navbar-toggler-icon"></span>
+                            </button>
+                            <Link to="/" className="navbar-brand fw-bold fs-4 m-0">
+                                <img src={logo} alt="logo" style={{ height: "40px" }} className="navbar-logo" />
+                            </Link>
+                        </div>
+                        <button className="btn p-1 border-0 fs-5" style={{ background: 'transparent' }} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+                            {theme === 'dark' ? <i className="bi bi-sun-fill text-warning"></i> : <i className="bi bi-moon-fill"></i>}
                         </button>
-                        <Link to="/" className="navbar-brand fw-bold fs-4">
-                            <img src={logo} alt="logo" style={{ height: "40px" }} className="navbar-logo" />
-
-                        </Link>
-
                     </div>
 
- <div className="search-box d-none d-lg-block">
-  <input
-    className="ms-3 form-control rounded-pill"
-    type="text"
-    placeholder="Search..."
-    onChange={(e) => {setsearch(e.target.value)}}
-  />
-    
-   {search.length > 0 && (
-    <ul className="search-result">
-      {filteredProducts.map((a) => (
-        <Link key={a._id} to={`/detail?id=${a._id}&cid=${a.Category}`} className="text-decoration-none text-dark"   onClick={() => setsearch("")}>
-          <li>{a.ProductName}</li>
-        </Link>
-      ))}
-    </ul>
-  )}
-</div>
+                    {/* === DESKTOP: Full Navbar === */}
+                    <div className="d-none d-lg-flex align-items-center w-100 flex-nowrap" style={{ gap: '8px' }}>
 
+                        {/* Logo */}
+                        <Link to="/" className="navbar-brand fw-bold fs-4 flex-shrink-0" style={{ marginRight: '12px' }}>
+                            <img src={logo} alt="logo" style={{ height: "42px" }} className="navbar-logo" />
+                        </Link>
 
-                    <div className="collapse navbar-collapse d-none d-lg-block" id="navbarSupportedContent">
+                        {/* Nav Links */}
+                        <ul className="navbar-nav flex-row gap-2 flex-shrink-0 mb-0">
 
+                            <Link to="/" className="text-decoration-none">
+                                <li className="nav-item">
+                                    <span className="nav-link fw-semibold px-3 py-2 rounded-2 header-nav-link">Home</span>
+                                </li>
+                            </Link>
 
-                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-2">
-
-                            <Link to="/"><li className="nav-item">
-                                <a className="nav-link active fw-semibold" href="#">
-                                    Home
-                                </a>
-                            </li></Link>
-
-                           <Link to="/about">  <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    About
-                                </a>
-                            </li></Link>
-
-
-                             <li className="nav-item dropdown">
-                                <Link
-                                    className="nav-link dropdown-toggle"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    Products
-                                </Link>
-                                <ul className="dropdown-menu shadow-sm">
-                                    {
-                                     cat.map((a)=>
-                                        <ul className=" list-unstyled text-decoration-none" >
-                                           <Link to={`/related?id=${a._id}`}> <li className="text-decoration-none text-black">{a.Name}</li></Link>
-                                        </ul>
-                                    ) }                               </ul>
-                                
-                            </li>
-
+                            <Link to="/about" className="text-decoration-none">
+                                <li className="nav-item">
+                                    <span className="nav-link px-3 py-2 rounded-2 header-nav-link">About</span>
+                                </li>
+                            </Link>
 
                             <li className="nav-item dropdown">
-                                <a
-                                    className="nav-link dropdown-toggle"
+                                <span
+                                    className="nav-link dropdown-toggle px-3 py-2 rounded-2 header-nav-link"
                                     role="button"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
+                                    style={{ cursor: 'pointer' }}
                                 >
-                                    Features
-                                </a>
-                                <ul className="dropdown-menu shadow-sm">
-                                  <Link to="/about">  <li><a className="dropdown-item">About Us</a></li></Link>
-                                    <Link to="/contact"> <li><a className="dropdown-item">Contact Us</a></li></Link>
-                                    <Link to="/myorder"> <li><a className="dropdown-item">Order</a></li></Link>
+                                    Products
+                                </span>
+                                <ul className="dropdown-menu shadow-sm border-0 mt-1">
+                                    {cat.map((a) =>
+                                        <li key={a._id}>
+                                            <Link to={`/related?id=${a._id}`} className="dropdown-item py-2">{a.Name}</Link>
+                                        </li>
+                                    )}
                                 </ul>
                             </li>
 
-                            {/* ACCOUNT */}
                             <li className="nav-item dropdown">
-                                <a
-                                    className="nav-link dropdown-toggle"
+                                <span
+                                    className="nav-link dropdown-toggle px-3 py-2 rounded-2 header-nav-link"
                                     role="button"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    Features
+                                </span>
+                                <ul className="dropdown-menu shadow-sm border-0 mt-1">
+                                    <li><Link to="/about" className="dropdown-item py-2">About Us</Link></li>
+                                    <li><Link to="/contact" className="dropdown-item py-2">Contact Us</Link></li>
+                                    <li><Link to="/myorder" className="dropdown-item py-2">Order</Link></li>
+                                </ul>
+                            </li>
+
+                            <li className="nav-item dropdown">
+                                <span
+                                    className="nav-link dropdown-toggle px-3 py-2 rounded-2 header-nav-link"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    style={{ cursor: 'pointer' }}
                                 >
                                     Account
-                                </a>
-                                <ul className="dropdown-menu dropdown-menu-end shadow-sm">
+                                </span>
+                                <ul className="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-1">
                                     <li>
-                                        {flag ? <>
-                                            <p onClick={logout} className=" text-center dropdown-item justify-content-center align-content-center">
-                                                Logout
-                                            </p></>
-                                            : <>
-                                                <Link className=" text-decoration-none text-black text-center ms-4" to="/login">Log IN</Link><br></br>
-                                                <Link className="text-decoration-none text-black text-center ms-4" to="/register">SignUp</Link>
-                                            </>}
+                                        {flag ? (
+                                            <p onClick={logout} className="dropdown-item text-center mb-0 py-2" style={{ cursor: 'pointer' }}>Logout</p>
+                                        ) : (
+                                            <>
+                                                <Link className="dropdown-item py-2 text-decoration-none" to="/login">Log In</Link>
+                                                <Link className="dropdown-item py-2 text-decoration-none" to="/register">Sign Up</Link>
+                                            </>
+                                        )}
                                     </li>
                                 </ul>
                             </li>
                         </ul>
-                      {
-                        flag ? 
-                            <div className="ms-5 d-flex align-items-center justify-content-center">
-                            <button className="fs-4 btn" onClick={() => cart()} ><i className="bi bi-cart-fill"></i></button>
-                            <div className="fs-4 btn"><i className="bi bi-heart-fill" onClick={() => wish()}></i></div>
-                            <button className="btn bg-black text-white log-out ms-3 rounded-pill" onClick={logout}>Logout</button>
+
+                        {/* Search Box — auto-grows, properly spaced */}
+                        <div className="search-box position-relative flex-grow-1" style={{ maxWidth: '260px', minWidth: '160px', margin: '0 12px' }}>
+                            <input
+                                className="form-control rounded-pill"
+                                type="text"
+                                placeholder="Search products..."
+                                value={search}
+                                onChange={(e) => { setsearch(e.target.value) }}
+                                style={{ paddingLeft: '20px', paddingRight: '20px' }}
+                            />
+                            {search.length > 0 && (
+                                <ul className="search-result">
+                                    {filteredProducts.map((a) => (
+                                        <Link key={a._id} to={`/detail?id=${a._id}&cid=${a.Category}`} className="text-decoration-none text-dark" onClick={() => setsearch("")}>
+                                            <li>{a.ProductName}</li>
+                                        </Link>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
-                        :<div className="ms-5 d-flex align-items-center justify-content-center">
-                            <button className="fs-4 btn" onClick={() => cart()} ><i className="bi bi-cart-fill"></i></button>
-                            <div className="fs-4 btn"><i className="bi bi-heart-fill" onClick={() => wish()}></i></div>
-                               <button className="btn bg-black text-white log-out  ms-3 rounded-pill" onClick={()=>{navigate("/login")}}>LogIn</button>
+
+                        {/* Action Buttons — right side */}
+                        <div className="d-flex align-items-center flex-shrink-0" style={{ gap: '6px', marginLeft: 'auto' }}>
+                            {/* Theme Toggle — prominently placed before cart */}
+                            <button
+                                className="theme-toggle-btn"
+                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                                title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                            >
+                                {theme === 'dark'
+                                    ? <><i className="bi bi-sun-fill text-warning me-1"></i> Light</>
+                                    : <><i className="bi bi-moon-fill me-1"></i> Dark</>
+                                }
+                            </button>
+                            <button className="btn border-0 fs-5 p-2" style={{ background: 'transparent' }} onClick={() => cart()} title="Cart">
+                                <i className="bi bi-cart-fill"></i>
+                            </button>
+                            <button className="btn border-0 fs-5 p-2" style={{ background: 'transparent' }} onClick={() => wish()} title="Wishlist">
+                                <i className="bi bi-heart-fill"></i>
+                            </button>
+                            {flag ? (
+                                <button className="btn rounded-pill px-4 py-2 fw-semibold ms-1" style={{ backgroundColor: '#111', color: '#fff', fontSize: '14px' }} onClick={logout}>Logout</button>
+                            ) : (
+                                <button className="btn rounded-pill px-4 py-2 fw-semibold ms-1" style={{ backgroundColor: '#111', color: '#fff', fontSize: '14px' }} onClick={() => { navigate("/login") }}>Log In</button>
+                            )}
                         </div>
-                      }
-                                            
+
                     </div>
                 </div>
             </nav>
+
+
 
 
 
