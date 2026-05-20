@@ -9,7 +9,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 export const Header = () => {
     const [flag, setflag] = useState(false);
     const { id, setid, theme, setTheme } = useContext(Context)
-    const { setutype } = useContext(Context)
      const[d,setd]=useState([])
      const[cat,setcat]=useState([])
     const searchRef = useRef(null);
@@ -96,7 +95,7 @@ export const Header = () => {
         <>
 
 
-            <nav className="navbar navbar-expand-lg shadow-sm sticky-top" style={{ backgroundColor: theme === 'dark' ? '#1f1f1f' : '#ffffff' }}>
+            <nav className={`navbar navbar-expand-lg shadow-sm sticky-top site-header ${theme === 'dark' ? 'site-header-dark' : 'site-header-light'}`}>
                 <div className="container-fluid px-4">
 
                     {/* === MOBILE: Toggler + Logo + Theme icon === */}
@@ -116,7 +115,7 @@ export const Header = () => {
                                 <img src={logo} alt="logo" style={{ height: "40px" }} className="navbar-logo" />
                             </Link>
                         </div>
-                        <button className="btn p-1 border-0 fs-5" style={{ background: 'transparent' }} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+                        <button className="btn header-icon-btn p-1 border-0 fs-5" style={{ background: 'transparent' }} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
                             {theme === 'dark' ? <i className="bi bi-sun-fill text-warning"></i> : <i className="bi bi-moon-fill"></i>}
                         </button>
                     </div>
@@ -239,10 +238,10 @@ export const Header = () => {
                                     : <><i className="bi bi-moon-fill me-1"></i> Dark</>
                                 }
                             </button>
-                            <button className="btn border-0 fs-5 p-2" style={{ background: 'transparent' }} onClick={() => cart()} title="Cart">
+                            <button className="btn header-icon-btn border-0 fs-5 p-2" style={{ background: 'transparent' }} onClick={() => cart()} title="Cart">
                                 <i className="bi bi-cart-fill"></i>
                             </button>
-                            <button className="btn border-0 fs-5 p-2" style={{ background: 'transparent' }} onClick={() => wish()} title="Wishlist">
+                            <button className="btn header-icon-btn border-0 fs-5 p-2" style={{ background: 'transparent' }} onClick={() => wish()} title="Wishlist">
                                 <i className="bi bi-heart-fill"></i>
                             </button>
                             {flag ? (
@@ -262,7 +261,7 @@ export const Header = () => {
 
 
             {/* moblie */}
-            <div className="offcanvas offcanvas-start d-lg-none" tabIndex="-1" id="mobileOffcanvas" aria-labelledby="mobileOffcanvasLabel">
+            <div className={`offcanvas offcanvas-start d-lg-none ${theme === 'dark' ? 'site-header-dark' : 'site-header-light'}`} tabIndex="-1" id="mobileOffcanvas" aria-labelledby="mobileOffcanvasLabel">
                 <div className="offcanvas-header border-bottom">
                     <h5 className="offcanvas-title fw-bold" id="mobileOffcanvasLabel">ElectoMart</h5>
                     <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -298,11 +297,11 @@ export const Header = () => {
                             </a>
                             <div className="collapse text-start" id="productsCollapse">
                                 <div className="ps-4 py-2" data-bs-dismiss="offcanvas">
-                                   <Link className="text-decoration-none text-black" to={`/related?id=6970dd16300a757a6dcdb928`}><li><a className="dropdown-item">LED</a></li></Link>
-                                    <Link className="text-decoration-none text-black" to={`/related?id=6970dd60300a757a6dcdb92e`}><li><a className="dropdown-item">Laptops</a></li></Link>
-                                    <Link className="text-decoration-none text-black" to={`/related?id=6970dd2d300a757a6dcdb92a`}><li><a className="dropdown-item">Mobiles</a></li></Link>
-                                    <Link className="text-decoration-none text-black" to={`/related?id=69849f299a77c6ecd3c2839b`}><li><a className="dropdown-item">Airpods</a></li></Link>
-                                    <Link className="text-decoration-none text-black" to={`/related?id=69849fa89a77c6ecd3c283af`}><li><a className="dropdown-item">Cameras</a></li></Link>
+                                   <Link className="dropdown-item text-decoration-none" to={`/related?id=6970dd16300a757a6dcdb928`}>LED</Link>
+                                    <Link className="dropdown-item text-decoration-none" to={`/related?id=6970dd60300a757a6dcdb92e`}>Laptops</Link>
+                                    <Link className="dropdown-item text-decoration-none" to={`/related?id=6970dd2d300a757a6dcdb92a`}>Mobiles</Link>
+                                    <Link className="dropdown-item text-decoration-none" to={`/related?id=69849f299a77c6ecd3c2839b`}>Airpods</Link>
+                                    <Link className="dropdown-item text-decoration-none" to={`/related?id=69849fa89a77c6ecd3c283af`}>Cameras</Link>
                                 </div>
                             </div>
                         </li>
@@ -325,7 +324,7 @@ export const Header = () => {
                             <div className="collapse text-start" id="featuresCollapse">
                                 <div className="ps-4 py-2 " data-bs-dismiss="offcanvas">
                                     <Link to="/about" className="dropdown-item py-2">About Us</Link>
-                                    <Link className="dropdown-item py-2" >Contact Us</Link>
+                                    <Link to="/contact" className="dropdown-item py-2" >Contact Us</Link>
                                     <Link to="/myorder" className="dropdown-item py-2">Order</Link>
                                 </div>
                             </div>
@@ -393,7 +392,7 @@ export const Header = () => {
                         <span className=''>Wishlist</span>
                     </div>
                     <div className="btn text-white" onClick={() => { cart() }}>
-                        <i class="bi bi-cart-fill"></i><br></br>
+                    <i className="bi bi-cart-fill"></i><br></br>
                         <span className=''>Cart</span>
                     </div>
                    {
@@ -409,7 +408,7 @@ export const Header = () => {
                 </div>
 
             </div>
-        <div className="offcanvas offcanvas-start d-lg-none" id="searchOffcanvas" tabindex="-1" aria-labelledby="searchOffcanvasLabel">
+        <div className={`offcanvas offcanvas-start d-lg-none ${theme === 'dark' ? 'site-header-dark' : 'site-header-light'}`} id="searchOffcanvas" tabIndex="-1" aria-labelledby="searchOffcanvasLabel">
             <div className="offcanvas-header border-bottom">
                 <h4 className="offcanvas-title" id="searchOffcanvasLabel">Search</h4>
                 <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"  ></button>

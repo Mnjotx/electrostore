@@ -3,20 +3,34 @@ const cors = require('cors')
 const express = require('express')
 const multer = require('multer')
 const bcrypt = require('bcrypt')
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
+const cloudinary = require('cloudinary').v2
+const dotenv=require("dotenv")
 const jwt = require('jsonwebtoken')
 const key = "$@*#5gf*yre@gutcf&@*#$234ju6"
+dotenv.config()
+
 
 const app = express()
+const PORT = process.env.PORT || 8000
 
 
 app.use(express.json())
-app.use(cors())
-
-app.listen(8000, () => {
-    console.log("Server is running on 7000")
+const corsfront = {
+    origin: [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://elcto-a5a8.onrender.com",
+        "http://elcto-a5a8.onrender.com"
+    ],
+    credentials: true,
+}
+app.use(cors(corsfront))
+app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT}`)
 })
 
-mongoose.connect("mongodb://127.0.0.1:27017/electro") // mongodb url
+mongoose.connect("mongodb+srv://manjots3003_db_user:yWjeUPGf7TGblofE@cluster0.pnmybht.mongodb.net/") // mongodb url
     .then(() => console.log("connected"))
     .catch(() => console.log("not connected"))
 
@@ -39,11 +53,11 @@ app.post("/api/register", async (req, res) => {
     })
 
     if (!passwor.test(req.body.pass)) {
-        res.send({ statuscode: 3, message: "🚨 Password must contain Uppercase, Lowercase, Number & Special character" })
+        return res.send({ statuscode: 3, message: "Password must contain Uppercase, Lowercase, Number & Special character" })
     }
    
     if (exist) {
-        res.send({ statuscode: 2, message: "Email is Already Used" })
+        return res.send({ statuscode: 2, message: "Email is Already Used" })
     }
     else {
         const hash = bcrypt.hashSync(req.body.pass, 10)
@@ -69,6 +83,9 @@ app.post("/api/register", async (req, res) => {
 
 app.post("/api/login", async (req, res) => {
     const result = await user.findOne({ Email: req.body.email})
+    if (!result) {
+        return res.send({ statuscode: 0 })
+    }
     const respass = result.Password
     const passw = bcrypt.compareSync(req.body.pass, respass)
     if (passw === true && result.Status === "Active") {
@@ -119,29 +136,34 @@ app.put("/api/changestatus/:id", async (req, res) => {
 })
 
 // category api
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
-var pic;
+// category api
 
-const myStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "D:/demo project/project2/frontend/public/uploads")
-    },
-    filename: (req, file, cb) => {
-        pic = Date.now() + "-" + file.originalname
-        cb(null, pic)
+const myStorage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "electomart",
+        allowed_formats: ["jpg", "png", "jpeg", "webp", "avif"]
     }
 })
+
+const upload = multer({ storage: myStorage })
+const getUploadedImage = (req) => req.file?.path || req.file?.secure_url || req.file?.filename || ""
 const Category = new mongoose.Schema({
     Name: String,
     Img: String
 })
-const upload = multer({ storage: myStorage })
 const Cate = mongoose.model("category", Category)
 
 app.post("/api/category", upload.single("pic"), async (req, res) => {
     const result = new Cate({
         Name: req.body.name,
-        Img: pic
+        Img: getUploadedImage(req)
     })
     if (result) {
         const resp = await result.save()
@@ -178,7 +200,7 @@ app.post("/api/brand", upload.single("pic"), async (req, res) => {
     const result = new br({
         BrandName: req.body.brandname,
         Category: req.body.category,
-        Img: pic
+        Img: getUploadedImage(req)
     })
     if (result) {
         const resp = await result.save()
@@ -254,7 +276,7 @@ app.post("/api/product", upload.single("pic"), async (req, res) => {
         SalePrice: req.body.saleprice,
         Brand: req.body.brand,
         Specifications: req.body.Specifications,
-        Img: pic
+        Img: getUploadedImage(req)
     })
 
     if (result) {
@@ -340,19 +362,24 @@ app.delete("/api/deletepro/:id", async (req, res) => {
 })
 
 app.put("/api/updatepro/:id", upload.single("pic"), async (req, res) => {
+    const updateData = {
+        Category: req.body.productt,
+        ProductName: req.body.name,
+        ProductPrice: req.body.price,
+        ProductDetail: req.body.detail,
+        OnSale: req.body.sale,
+        Date: new Date(),
+        SalePrice: req.body.saleprice,
+        Brand: req.body.brand,
+        Specifications: req.body.specifications
+    }
+    const image = getUploadedImage(req)
+    if (image) {
+        updateData.Img = image
+    }
+
     const result = await pro.updateOne({ _id: req.params.id }, {
-        $set: {
-            Category: req.body.productt,
-            ProductName: req.body.name,
-            ProductPrice: req.body.price,
-            ProductDetail: req.body.detail,
-            OnSale: req.body.sale,
-            Date: new Date(),
-            SalePrice: req.body.saleprice,
-            Brand: req.body.brand,
-            Specifications: req.body.specifications,
-            Img: pic
-        }
+        $set: updateData
     })
     if (result.modifiedCount === 1) {
         res.send({ statuscode: 1 })
@@ -849,6 +876,9 @@ app.get("/api/vendordata",async(req,res)=>{
 
 app.post("/api/vlog",async(req,res)=>{
     const result=await vendordata.findOne({Email:req.body.email})
+    if(!result){
+        return res.send({statuscode:0})
+    }
     const respass2=result.Password
     const passw2=bcrypt.compareSync(req.body.pass,respass2)
     if(result.Email===req.body.email && passw2===true && result.Status==="Accept"){

@@ -1,5 +1,14 @@
 .App {
   text-align: center;
+  min-height: 100vh;
+  background: #ffffff;
+  color: #1a1a1a;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.App.dark-mode {
+  background: #111827;
+  color: #f3f4f6;
 }
 
 .App-logo {
@@ -145,7 +154,6 @@ footer li{
 .search-box{
   position: relative;
   width: 300px;
-  left:80px;
   top:3px
 }
 .search-result{
@@ -175,5 +183,85 @@ footer li{
 .bi-heart-fill{
   color: rgb(230, 21, 21);
   cursor: pointer;
+}
+
+.site-header {
+  color: #1a1a1a;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.site-header-light {
+  background: #ffffff;
+}
+
+.site-header-dark {
+  background: #151a23;
+  color: #f8fafc;
+}
+
+.site-header-dark .navbar-toggler {
+  filter: invert(1);
+}
+
+.site-header .header-nav-link,
+.site-header .nav-link,
+.site-header .navbar-brand,
+.site-header .header-icon-btn {
+  color: inherit !important;
+}
+
+.site-header .header-nav-link:hover,
+.site-header .nav-link:hover,
+.site-header .header-icon-btn:hover {
+  background: rgba(13, 110, 253, 0.12) !important;
+  color: #0d6efd !important;
+}
+
+.site-header-dark .header-nav-link:hover,
+.site-header-dark .nav-link:hover,
+.site-header-dark .header-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+.site-header-dark .dropdown-menu,
+.site-header-dark .search-result {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.site-header-dark .dropdown-item,
+.site-header-dark .search-result a,
+.site-header-dark .search-result li {
+  color: #f8fafc !important;
+}
+
+.site-header-dark .dropdown-item:hover,
+.site-header-dark .search-result li:hover {
+  background: #374151;
+}
+
+.site-header-dark .form-control {
+  background: #111827;
+  border-color: #4b5563;
+  color: #f8fafc;
+}
+
+.site-header-dark .form-control::placeholder {
+  color: #9ca3af;
+}
+
+.theme-toggle-btn {
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 14px;
+}
+
+.site-header-dark .theme-toggle-btn {
+  border-color: #4b5563;
 }
 

@@ -11,6 +11,7 @@ function App() {
   const [id, setid] = useState("")
   const [utype, setutype] = useState("")
   const [mail, setmail] = useState("")
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light")
 
 
   useEffect(() => {
@@ -25,15 +26,19 @@ function App() {
         setutype(decode.usertype)
         setid(decode.id)
         setmail(decode.mail)
-        console.log("mail is", mail)
       }
     }
-  })
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme)
+    document.documentElement.setAttribute("data-bs-theme", theme)
+  }, [theme])
 
   return (
-    <div className="App">
+    <div className={`App ${theme === "dark" ? "dark-mode" : ""}`}>
 
-      <Context.Provider value={{ id, setid, utype, setutype, mail, setmail }}>
+      <Context.Provider value={{ id, setid, utype, setutype, mail, setmail, theme, setTheme }}>
         {
           utype === "admin" ? <AdminHeader></AdminHeader> : <Header></Header>
 
