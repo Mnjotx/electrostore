@@ -20,7 +20,7 @@ const corsfront = {
     origin: [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
-        "https://elcto-a5a8.onrender.com",
+        "https://electrostore-nine.vercel.app",
         "http://elcto-a5a8.onrender.com"
     ],
     credentials: true,
