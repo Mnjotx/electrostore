@@ -50,7 +50,7 @@ export const Productt = () => {
         formData.append("Specifications", specifications);
 
 
-        const result = await fetch("http://localhost:8000/api/product", {
+        const result = await fetch("https://elcto-1.onrender.com/api/product", {
             method: "post",
             body: formData
         })
@@ -71,7 +71,7 @@ export const Productt = () => {
     const show = async (e) => {
 
 
-        const result = await fetch("http://localhost:8000/api/getcategory", {
+        const result = await fetch("https://elcto-1.onrender.com/api/getcategory", {
             method: "get"
         })
         if (result) {
@@ -83,7 +83,7 @@ export const Productt = () => {
         }
     }
     const show2 = async () => {
-        const result = await fetch(`http://localhost:8000/api/getbrand2/${id}`, {
+        const result = await fetch(`https://elcto-1.onrender.com/api/getbrand2/${id}`, {
             method: "get"
         })
         if (result) {
@@ -99,7 +99,7 @@ export const Productt = () => {
     }
     const show3 = async () => {
 
-        const result = await fetch("http://localhost:8000/api/getproduct", {
+        const result = await fetch("https://elcto-1.onrender.com/api/getproduct", {
             method: "get"
         })
         if (result.ok) {
@@ -126,7 +126,7 @@ export const Productt = () => {
 
         if (confirm.isConfirmed) {
 
-            const result = await fetch(`http://localhost:8000/api/deletepro/${id}`, {
+            const result = await fetch(`https://elcto-1.onrender.com/api/deletepro/${id}`, {
                 method: "DELETE"
             });
 
@@ -178,7 +178,7 @@ export const Productt = () => {
         formData2.append("pic", img)
     }
 
-    const result = await fetch(`http://localhost:8000/api/updatepro/${idd}`, {
+    const result = await fetch(`https://elcto-1.onrender.com/api/updatepro/${idd}`, {
         method: "PUT",
         body: formData2
     })

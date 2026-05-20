@@ -153,7 +153,7 @@ export const Main = () => {
         }
     }
     const show6 = async () => {
-        const result = await fetch("http://localhost:8000/api/mobiles", {
+        const result = await fetch("https://elcto-1.onrender.comder.com/api/mobiles", {
             method: "get"
         })
         if (result) {
@@ -167,7 +167,7 @@ export const Main = () => {
         }
     }
     const show7 = async () => {
-        const result = await fetch("http://localhost:8000/api/leds", {
+        const result = await fetch("https://elcto-1.onrender.comder.com/api/leds", {
             method: "get"
         })
         if (result) {
@@ -181,7 +181,7 @@ export const Main = () => {
         }
     }
     const show8 = async () => {
-        const result = await fetch("http://localhost:8000/api/airpods", {
+        const result = await fetch("https://elcto-1.onrender.comder.com/api/airpods", {
             method: "get"
         })
         if (result) {
@@ -206,7 +206,7 @@ export const Main = () => {
         return
     }
         const data = { id, name, price, img,saleprice }
-        const result = await fetch(`http://localhost:8000/api/wishpost/${prr}`, {
+        const result = await fetch(`https://elcto-1.onrender.comder.com/api/wishpost/${prr}`, {
             method: "post",
             body: JSON.stringify(data),
             headers: { "Content-type": "application/json;charset=UTF-8" }
@@ -248,7 +248,7 @@ export const Main = () => {
     }
         if (!prr || !id) return;
         const data = { id, name, price, img, value,proby }
-        const result = await fetch(`http://localhost:8000/api/cartdata/${prr}`, {
+        const result = await fetch(`https://elcto-1.onrender.comder.com/api/cartdata/${prr}`, {
             method: "post",
             body: JSON.stringify(data),
             headers: { "Content-type": "application/json;charset=UTF-8" }

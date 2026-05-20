@@ -21,7 +21,7 @@ export const Related = () => {
     }
 }, [prr]);
     const show = async (id) => {
-        const result = await fetch(`http://localhost:8000/api/related/${id}`, {
+        const result = await fetch(`https://elcto-1.onrender.com/api/related/${id}`, {
             method: "get"
         })
         if (result.ok) {
@@ -37,7 +37,7 @@ console.log(res.data)
     }
 
     const show2 = async () => {
-        const result = await fetch(`http://localhost:8000/api/getbrand/${prr}`, {
+        const result = await fetch(`https://elcto-1.onrender.com/api/getbrand/${prr}`, {
             method: "get"
         })
         if (result) {
@@ -53,7 +53,7 @@ console.log(res.data)
     const wish = async (id, name, price, img, prr) => {
         if (!prr || !id) return;
         const data = { id, name, price, img }
-        const result = await fetch(`http://localhost:8000/api/wishpost/${prr}`, {
+        const result = await fetch(`https://elcto-1.onrender.com/api/wishpost/${prr}`, {
             method: "post",
             body: JSON.stringify(data),
             headers: { "Content-type": "application/json;charset=UTF-8" }
@@ -116,7 +116,7 @@ console.log(res.data)
     const cart = async (id, name, price, img, value = 1, prr) => {
         if (!prr || !id) return;
         const data = { id, name, price, img, value }
-        const result = await fetch(`http://localhost:8000/api/cartdata/${prr}`, {
+        const result = await fetch(`https://elcto-1.onrender.com/api/cartdata/${prr}`, {
             method: "post",
             body: JSON.stringify(data),
             headers: { "Content-type": "application/json;charset=UTF-8" }

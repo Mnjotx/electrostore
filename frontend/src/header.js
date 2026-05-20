@@ -30,7 +30,7 @@ export const Header = () => {
     },[search])
 
     const handleSearch = async () => {
-        const result = await fetch(`http://localhost:8000/api/getproduct`, {
+        const result = await fetch(`https://elcto-1.onrender.com/api/getproduct`, {
             method: "get"
         })
         if (result.ok) {
@@ -78,7 +78,7 @@ export const Header = () => {
     }
 
     const show=async()=>{
-        const result = await fetch("http://localhost:8000/api/getcategory", {
+        const result = await fetch("https://elcto-1.onrender.com/api/getcategory", {
           method: "get"
         })
         if (result.ok) {

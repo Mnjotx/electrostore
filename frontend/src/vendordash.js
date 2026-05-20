@@ -38,7 +38,7 @@ export const VendorDashboard = () => {
 
 
     const show=async()=>{
-        const result=await fetch(`http://localhost:8000/api/vendorproduct/${id}`,{
+        const result=await fetch(`https://elcto-1.onrender.com/api/vendorproduct/${id}`,{
             method:"get"
         })
         if(result.ok){
@@ -51,7 +51,7 @@ export const VendorDashboard = () => {
 
    const show2 = async () => {
     try {
-        const result = await fetch(`http://localhost:8000/api/vendorrevenue/${id}`, {
+        const result = await fetch(`https://elcto-1.onrender.com/api/vendorrevenue/${id}`, {
             method: "get"
         });
 
