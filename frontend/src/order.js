@@ -12,7 +12,7 @@ export const Order = () => {
     }, [id])
 
     const show = async () => {
-        const result = await fetch(`https://elcto-1.onrender.comder.comder.com/api/myorder/${id}`)
+        const result = await fetch(`  https://elcto-1.onrender.com/api/myorder/${id}`)
         const res = await result.json()
 
         if (res.statuscode === 1) {

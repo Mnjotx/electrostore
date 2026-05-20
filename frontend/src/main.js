@@ -153,7 +153,7 @@ export const Main = () => {
         }
     }
     const show6 = async () => {
-        const result = await fetch("https://elcto-1.onrender.comder.com/api/mobiles", {
+        const result = await fetch(" https://elcto-1.onrender.com/api/mobiles", {
             method: "get"
         })
         if (result) {
@@ -167,7 +167,7 @@ export const Main = () => {
         }
     }
     const show7 = async () => {
-        const result = await fetch("https://elcto-1.onrender.comder.com/api/leds", {
+        const result = await fetch(" https://elcto-1.onrender.com/api/leds", {
             method: "get"
         })
         if (result) {
@@ -181,7 +181,7 @@ export const Main = () => {
         }
     }
     const show8 = async () => {
-        const result = await fetch("https://elcto-1.onrender.comder.com/api/airpods", {
+        const result = await fetch(" https://elcto-1.onrender.com/api/airpods", {
             method: "get"
         })
         if (result) {
@@ -206,7 +206,7 @@ export const Main = () => {
         return
     }
         const data = { id, name, price, img,saleprice }
-        const result = await fetch(`https://elcto-1.onrender.comder.com/api/wishpost/${prr}`, {
+        const result = await fetch(` https://elcto-1.onrender.com/api/wishpost/${prr}`, {
             method: "post",
             body: JSON.stringify(data),
             headers: { "Content-type": "application/json;charset=UTF-8" }
@@ -248,7 +248,7 @@ export const Main = () => {
     }
         if (!prr || !id) return;
         const data = { id, name, price, img, value,proby }
-        const result = await fetch(`https://elcto-1.onrender.comder.com/api/cartdata/${prr}`, {
+        const result = await fetch(` https://elcto-1.onrender.com/api/cartdata/${prr}`, {
             method: "post",
             body: JSON.stringify(data),
             headers: { "Content-type": "application/json;charset=UTF-8" }
@@ -393,7 +393,7 @@ export const Main = () => {
                                     style={{ height: "150px" }}
                                 >
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={`${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid rounded"
@@ -462,7 +462,7 @@ export const Main = () => {
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={`${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid"
@@ -523,7 +523,7 @@ export const Main = () => {
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={`${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid"
@@ -584,7 +584,7 @@ export const Main = () => {
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={`${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid"
@@ -646,7 +646,7 @@ export const Main = () => {
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={`${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid"
@@ -708,7 +708,7 @@ export const Main = () => {
                                 </div>
                                 <div className=" rounded d-flex justify-content-center align-items-center mb-3" style={{ height: "150px" }}>
                                     <img
-                                        src={`/uploads/${p.Img}`}
+                                        src={`${p.Img}`}
                                         alt={p.name}
                                         loading='lazy'
                                         className="img-fluid"
@@ -854,3 +854,4 @@ export const Main = () => {
         </>
     )
 };
+
