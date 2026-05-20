@@ -137,9 +137,9 @@ app.put("/api/changestatus/:id", async (req, res) => {
 
 // category api
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    cloud_name: "dfesgg9yo",
+    api_key: '822768992894464',
+    api_secret:"nkJmbkPxdYrrH2Lx5Hc1ALs-VC8"
 })
 
 // category api
