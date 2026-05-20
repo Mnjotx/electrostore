@@ -191,7 +191,7 @@ console.log(res.data)
               >
 
                 <img
-                  src={` /${a.Img}`}
+                  src={`${a.Img}`}
                   className="object-fit-cover rounded mx-auto"
                   style={{ width: "100px", height: "100px" }}
                   alt=""
@@ -393,4 +393,5 @@ onClick={()=>setpricesort("high")}
         </>
     )
 }       
+
 
