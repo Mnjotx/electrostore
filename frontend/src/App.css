@@ -211,17 +211,29 @@ footer li{
 }
 
 .site-header .header-nav-link:hover,
-.site-header .nav-link:hover,
-.site-header .header-icon-btn:hover {
+.site-header .nav-link:hover {
   background: rgba(13, 110, 253, 0.12) !important;
   color: #0d6efd !important;
 }
 
 .site-header-dark .header-nav-link:hover,
-.site-header-dark .nav-link:hover,
-.site-header-dark .header-icon-btn:hover {
+.site-header-dark .nav-link:hover {
   background: rgba(255, 255, 255, 0.12) !important;
   color: #ffffff !important;
+}
+
+.site-header .header-icon-btn:hover,
+.site-header .theme-toggle-btn:hover,
+.site-header .theme-toggle-btn:focus {
+  background: rgba(17, 24, 39, 0.08) !important;
+  color: inherit !important;
+}
+
+.site-header-dark .header-icon-btn:hover,
+.site-header-dark .theme-toggle-btn:hover,
+.site-header-dark .theme-toggle-btn:focus {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: inherit !important;
 }
 
 .site-header-dark .dropdown-menu,
@@ -259,6 +271,7 @@ footer li{
   font-size: 14px;
   font-weight: 600;
   padding: 8px 14px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .site-header-dark .theme-toggle-btn {
